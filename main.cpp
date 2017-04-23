@@ -98,19 +98,22 @@ int main()
     }
 
     //Print results
-    for(double i=0;i<1;i+=0.001)
-        for(double j=0;j<1;j+=0.001)
-        {
-            double input2[2]={i,j};
-            calculateAnswer(input2);
-        }
+    // for(double i=0;i<1;i+=0.001)
+    //     for(double j=0;j<1;j+=0.001)
+    //     {
+    //         double input2[2]={i,j};
+    //         calculateAnswer(input2);
+    //     }
 
 
-    // cout<<"End weights: "<<endl;
-    // for(int i=0;i<4;i++)
-    //     printVector(weights1[i],2);
-    // cout<<endl;
-    // printVector(weights2, 4);
+    cout<<"End weights: "<<endl;
+    for(int i=0;i<4;i++)
+        printVector(weights1[i],2);
+    cout<<endl;
+    printVector(weights2, 4);
+
+    for(int i=0;i<4;i++)
+        calculateAnswer(input[i]);
 }
 
 double activation(double value)
