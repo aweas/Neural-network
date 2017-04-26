@@ -79,7 +79,7 @@ double* Network::multiplyLayers(vector<double> in1, double **in2, int lay1Neuron
         for(int j=0; j<lay1Neurons; j++)
             cell+=in1[j]*in2[i][j];
 
-        //cell+=in2[i][lay1Neurons];      //Including bias
+        cell+=in2[i][lay1Neurons];      //Including bias
         answer[i] = activation(cell);
     }
     return answer;
@@ -131,21 +131,21 @@ void Network::train(vector<vector<double>> input, vector<vector<double>> output,
         //Update weights
         for(int i=0;i<dataSize;i++)
             for(int j=0;j<layers[1].neuronNumber;j++)
-                for(int k=0;k<layers[1].weightsPerNeuron-1;k++)
+                for(int k=0;k<layers[1].weightsPerNeuron;k++)
                 {
-                    // if(k==layers[0].neuronNumber)                    //Bias
-                    //     layers[1].weights[j][k]+=l2Delta[i][j];
-                    // else
+                    if(k==layers[0].neuronNumber)                    //Bias
+                        layers[1].weights[j][k]+=l2Delta[i][j];
+                    else
                         layers[1].weights[j][k]+=l2Delta[i][j]*l1calculated[i][k];
                 }
 
         for(int i=0;i<dataSize;i++)
             for(int j=0;j<layers[0].neuronNumber;j++)
-                for(int k=0;k<layers[0].weightsPerNeuron-1;k++)
+                for(int k=0;k<layers[0].weightsPerNeuron;k++)
                 {
-                    // if(k==inputSize)                                //Bias
-                    //     layers[0].weights[j][k]+=l1Delta[i][j];
-                    // else
+                    if(k==inputSize)                                //Bias
+                        layers[0].weights[j][k]+=l1Delta[i][j];
+                    else
                         layers[0].weights[j][k]+=l1Delta[i][j]*input[i][k];
                 }
 

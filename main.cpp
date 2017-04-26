@@ -24,7 +24,7 @@ int main()
 
     Network mainNetwork(2, 1);
 
-    mainNetwork.train(input, output, 60000, 4);
+    mainNetwork.train(input, output, 100000, 4);
     double** out = new double*[4];
 
     for(int i=0;i<4;i++)

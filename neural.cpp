@@ -51,7 +51,7 @@ int main()
     // printVector(weights2, 4);
 
     //60000 training cycles
-    for(int k=0;k<1;k++)
+    for(int k=0;k<100000;k++)
     {
         double l1[4][4];    //4 data sets:4 neurons
         double l2[4];       //4 data sets:1 neuron
