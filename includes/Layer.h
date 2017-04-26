@@ -51,11 +51,9 @@ void Layer::printLayer()
 
 void Layer::initLayer()
 {
-    // for(int i=0;i<neuronNumber;i++)
-    //     for(int j=0;j<weightsPerNeuron;j++)
-    //         weights[i][j]=rand()%1000/(double)1000;
-    weights[0][0]=0.1;
-    weights[0][1]=0.5;
+    for(int i=0;i<neuronNumber;i++)
+        for(int j=0;j<weightsPerNeuron;j++)
+            weights[i][j]=rand()%1000/(double)1000;
 }
 
 double** Layer::toMatrix()

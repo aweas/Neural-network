@@ -15,6 +15,7 @@ private:
     vector<Layer> layers;
     int inputSize;
     int outputSize;
+    bool bias;
 
     double* multiplyLayers(vector<double> in1, double** in2, int lay1Neurons, int lay2Neurons);
     double* multiplyLayers(double* in1, double **in2, int lay1Neurons, int lay2Neurons);
@@ -22,16 +23,17 @@ private:
     double derivative(double value);
 
 public:
-    Network(int inputSize, int outputSize);
+    Network(int inputSize, int outputSize, bool bias);
     void importData(double* data);
     double* calculate(vector<double> input);
     void train(vector<vector<double>> input, vector<vector<double>> output, int times, int dataSize);
 };
 
-Network::Network(int iSize, int oSize)
+Network::Network(int iSize, int oSize, bool bis)
 {
     inputSize = iSize;
     outputSize = oSize;
+    bias = bis;
 
     Layer input(4, inputSize);
     layers.push_back(input);
@@ -79,7 +81,9 @@ double* Network::multiplyLayers(vector<double> in1, double **in2, int lay1Neuron
         for(int j=0; j<lay1Neurons; j++)
             cell+=in1[j]*in2[i][j];
 
-        cell+=in2[i][lay1Neurons];      //Including bias
+        if(bias)
+            cell+=in2[i][lay1Neurons];      //Include bias
+
         answer[i] = activation(cell);
     }
     return answer;
@@ -148,18 +152,18 @@ void Network::train(vector<vector<double>> input, vector<vector<double>> output,
                     else
                         layers[0].weights[j][k]+=l1Delta[i][j]*input[i][k];
                 }
-
-        if(t%10000==0)
+        
+        if(t==times-1)
         {
             double err=0;
-
             for(int i=0;i<dataSize;i++)
                 for(int j=0;j<layers[1].neuronNumber;j++)
                     err+=abs(l2Error[i][j]);
             err/=(layers[1].neuronNumber*dataSize);
-            cout<<t<<"# Error: "<<err<<endl;
+            cout<<"Error: "<<err<<endl;
         }
-        
+
+
         for(int i=0;i<dataSize;i++)
         {
             delete []l2Error[i];
@@ -177,7 +181,9 @@ void Network::train(vector<vector<double>> input, vector<vector<double>> output,
     delete []l1Delta;
     delete []l2calculated;
     delete []l1calculated;
-//    cout<<"L1: "<<layers[0].values[0]<<endl;
+
+
+
 }
 
 double Network::activation(double value)
