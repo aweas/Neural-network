@@ -19,7 +19,7 @@ double weights2[4];
 
 int main()
 {
-    srand(time(NULL));
+    srand(1);
 
     double input[4][2] = {{0,0},
                        {0,1},
@@ -51,7 +51,7 @@ int main()
     // printVector(weights2, 4);
 
     //60000 training cycles
-    for(int k=0;k<60001;k++)
+    for(int k=0;k<1;k++)
     {
         double l1[4][4];    //4 data sets:4 neurons
         double l2[4];       //4 data sets:1 neuron
@@ -70,9 +70,6 @@ int main()
 
         //Output layer error calculating
         substractVectors(output, l2, l2_err, 4);
-
-        // if(k%10000==0)
-        //     cout<<k<<"# Error: "<<(abs(l2_err[0])+abs(l2_err[1])+abs(l2_err[2])+abs(l2_err[3]))/4<<endl;
 
         //Backwards propagation
         //Each neuron calculates its error for 4 iterations (important: NEURON, not its weights)
